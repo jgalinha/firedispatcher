@@ -1,0 +1,11 @@
+//registo de utilizador
+db.users.insert({
+    user: "20000366",
+    type: "admin",
+    pwd: "admin",
+    email: "jbgalinha@gmail.com",
+    roles: [
+        {
+            admin: true
+            }]
+})
