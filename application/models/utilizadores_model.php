@@ -3,20 +3,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Utilizadores_model extends CI_Model {
     
+    public function activar_conta($id){
+        
+        $query =  $this->cimongo->where(array('user' => $id))->set(array('activated' => 1))->update('users');
+        return $query;        
+    }
+    
     public function get_user_by_id($id){
         
         $user = null;
+
+        $theObjId = new MongoId($id); 
+
+        $connection = new MongoClient(); 
+        $db = $connection->firehouse->users; 
+
+        // this will return our matching entry. 
+        $user = $db->findOne(array("_id" => $theObjId)); 
         
-        $query = $this->cimongo->where(array('_id' => $id));
-        $query = $this->cimongo->get('users');
-        
-        if($query->num_rows() > 0) {
-            $user = $query->result_array();
-            
-            return $user[0];
-        } else {
-            return $user;
-        }
+        return $user;
         
     }
     
