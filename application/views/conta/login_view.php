@@ -87,7 +87,7 @@
                                 if($alerta != null){
                                     print('<div class="alert alert-' . $alerta['class'] . ' alert-block">');
                                     print('<a class="close" data-dismiss="alert" href="#">×</a>');
-                                    print('<h4 class="alert-heading">Erro!</h4>');
+                                    print('<h4 class="alert-heading">' . $alerta['cabeçalho'] . '</h4>');
                                     print($alerta['mensagem']);
                                     print('</div>');
                                 } 

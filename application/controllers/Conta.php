@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Conta extends CI_Controller {
     
-   /* public function ativar($id) {
+    public function ativar($id) {
         $alerta = null;
         if($this->session->userdata('login') === TRUE)
         {
@@ -15,8 +15,37 @@ class Conta extends CI_Controller {
             $user = $this->users->get_user_by_id($id);
             
             
+            if ($user['activated'] === 0)
+            {
+                $activar = $this->users->activar_conta($user['user']);
+                
+                if($activar) {
+                    $alerta = array(
+                        "class" => "success",
+                        "cabeçalho" => "Conta Confirmada!",
+                        "mensagem" => "A sua conta foi confirmada.<br>Espera até que um administrador a active." . validation_errors()
+                    );
+                } else {
+                    $alerta = array(
+                        "class" => "warning",
+                        "cabeçalho" => "Erro!",
+                        "mensagem" => "Ocorreu um erro durante a activação.<br>Tente novamente." . validation_errors()
+                    );
+                }
+            } else {
+                $alerta = array(
+                    "class" => "danger",
+                    "cabeçalho" => "Erro!",
+                    "mensagem" => "A sua conta já se encontra activada, faça login." . validation_errors()
+                );
+            }
+            
+            $dados = array (
+                "alerta" => $alerta
+            );
+            $this->load->view('conta/login_view', $dados);
         }
-    }*/
+    }
     
     public function registar(){
         $alerta = null;
@@ -181,6 +210,8 @@ class Conta extends CI_Controller {
                     
                             $session = array(
                                 'user' => $utilizador['user'],
+                                'firstName' => $utilizador['firstName'],
+                                'lastName' => $utilizador['lastName'],
                                 'login' => TRUE,
                                 'lock' => FALSE
                             );
@@ -194,6 +225,7 @@ class Conta extends CI_Controller {
                             //CONTA NÃO ATIVADA
                             $alerta = array(
                                 "class" => "warning",
+                                "cabeçalho" => "Erro!",
                                 "mensagem" => "A sua conta não se encontra ativada<br>" . validation_errors()
                             );
                         }
@@ -202,6 +234,7 @@ class Conta extends CI_Controller {
                         //CONTA NÃO CONFIRMADA
                         $alerta = array(
                             "class" => "warning",
+                            "cabeçalho" => "Erro!",
                             "mensagem" => "A sua conta não se encontra confirmada<br>" . validation_errors()
                         );
                     }
@@ -210,6 +243,7 @@ class Conta extends CI_Controller {
                     //LOGIN INVALIDO
                     $alerta = array(
                         "class" => "danger",
+                        "cabeçalho" => "Erro!",
                         "mensagem" => "Dados de login incorrectos<br>" . validation_errors()
                     );
                 }
@@ -218,6 +252,7 @@ class Conta extends CI_Controller {
                 //ERRO NO PREENCHIMENTO DO FORMULARIO
                 $alerta = array(
                     "class" => "danger",
+                    "cabeçalho" => "Erro!",
                     "mensagem" => "Erro no login!<br>" . validation_errors()
                 );
             }
