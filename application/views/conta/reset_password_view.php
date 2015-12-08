@@ -82,8 +82,8 @@
                                 'class' => 'smart-form client-form'
                             );
                                 
-                                echo form_open('conta/entrar', $attributes, array('captcha' => ''));
-                                print("<header>Entrar</header>");
+                                echo form_open('conta/update_password', $attributes, array('captcha' => ''));
+                                print("<header>Actualizar Password</header>");
                                 if($alerta != null){
                                     print('<div class="alert alert-' . $alerta['class'] . ' alert-block">');
                                     print('<a class="close" data-dismiss="alert" href="#">×</a>');
@@ -91,31 +91,33 @@
                                     print($alerta['mensagem']);
                                     print('</div>');
                                 } 
+                                
+                                if(isset($email_hash, $email_code)){
                         ?>
-                            <fieldset>
-                                <section>
-                                    <label for="utilizador" class="label">Utilizador</label>
-                                    <label class="input"> <i class="icon-append fa fa-user"></i>
-                                        <input type="number" name="utilizador" value="<?php echo set_value('utilizador'); ?>">
-                                        <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Insira o seu utilizador</b></label>
-                                </section>
+                            <input type="hidden" value="<?php echo $email_hash ?>" name="email_hash">
+                            <input type="hidden" value="<?php echo $email_code ?>" name="email_code">
+                            <input type="hidden" value="<?php echo $email ?>" name="email">
+                            <?php } ?>
+                                <fieldset>
 
-                                <section>
-                                    <label for="password" class="label">Password</label>
-                                    <label class="input"> <i class="icon-append fa fa-lock"></i>
-                                        <input type="password" name="password">
-                                        <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Insira a sua password</b> </label>
-                                    <div class="note">
-                                        <a href="<?php echo base_url('conta/recuperar_password');?>">Perdeu a password?</a>
-                                    </div>
-                                </section>
-                            </fieldset>
-                            <footer>
-                                <button type="submit" value="entrar" name="entrar" class="btn btn-primary">
-                                    Entrar
-                                </button>
-                            </footer>
-                            <?php echo form_close(); ?>
+                                    <section>
+                                        <label class="input"> <i class="icon-append fa fa-lock "></i>
+                                            <input type="password" name="password" placeholder="Password" id="password">
+                                            <b class="tooltip tooltip-bottom-right ">Não se esqueça da sua password</b> </label>
+                                    </section>
+
+                                    <section>
+                                        <label class="input"> <i class="icon-append fa fa-lock "></i>
+                                            <input type="password" name="passwordConfirm" placeholder="Confirmação da password">
+                                            <b class="tooltip tooltip-bottom-right">Não se esqueça da sua password</b> </label>
+                                    </section>
+                                </fieldset>
+                                <footer>
+                                    <button type="submit" value="recuperar" name="recuperar" class="btn btn-primary">
+                                        Actualizar a password
+                                    </button>
+                                </footer>
+                                <?php echo form_close(); ?>
 
                     </div>
 
@@ -177,26 +179,27 @@
             $("#login-form").validate({
                 // Rules for form validation
                 rules: {
-                    utilizador: {
-                        required: true,
-                        number: true,
-                        minlength: 7,
-                        maxlength: 8
-                    },
                     password: {
                         required: true,
                         minlength: 5,
                         maxlength: 20
+                    },
+                    passwordConfirm: {
+                        required: true,
+                        minlength: 5,
+                        maxlength: 20,
+                        equalTo: '#password'
                     }
                 },
 
                 // Messages for form validation
                 messages: {
-                    utilizador: {
-                        required: 'Por favor introduza o seu utilizador',
-                    },
                     password: {
                         required: 'Por favor introduza a sua password'
+                    },
+                    passwordConfirm: {
+                        required: 'Por favor introduza a sua password mais uma vez',
+                        equalTo: 'As passwords não são iguais'
                     }
                 },
 
