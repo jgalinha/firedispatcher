@@ -165,7 +165,7 @@
 
             <!-- logout button -->
             <div id="logout" class="btn-header transparent pull-right">
-                <span> <a href="<?php echo base_url('conta/sair'); ?>" title="Terminar Sessão" data-action="userLogout" data-logout-msg="Pode reforçar a segurança fechando o browser!"><i class="fa fa-sign-out"></i></a> </span>
+                <span> <a href="<?php echo base_url('home/sair'); ?>" title="Terminar Sessão" data-action="userLogout" data-logout-msg="Pode reforçar a segurança fechando o browser!"><i class="fa fa-sign-out"></i></a> </span>
             </div>
             <!-- end logout button -->
 
