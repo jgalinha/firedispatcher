@@ -82,8 +82,8 @@ Ref: https://developer.apple.com/library/ios/documentation/AppleApplications/Ref
                                 'class' => 'smart-form client-form'
                             );
 
-                            echo form_open('conta/entrar', $attributes, array('captcha' => ''));
-                            print("<header>Entrar</header>");
+                            echo form_open('conta/recuperar_password', $attributes, array('captcha' => ''));
+                            print("<header>Recuperar Password</header>");
                             if($alerta != null){
                                 print('<div class="alert alert-' . $alerta['class'] . ' alert-block">');
                                 print('<a class="close" data-dismiss="alert" href="#">×</a>');
@@ -93,26 +93,17 @@ Ref: https://developer.apple.com/library/ios/documentation/AppleApplications/Ref
                             } 
                             ?>
                             <fieldset>
-                                <section>
-                                    <label for="utilizador" class="label">Utilizador</label>
-                                    <label class="input"> <i class="icon-append fa fa-user"></i>
-                                        <input type="number" name="utilizador" value="<?php echo set_value('utilizador'); ?>">
-                                        <b class="tooltip tooltip-top-right"><i class="fa fa-user txt-color-teal"></i> Insira o seu utilizador</b></label>
-                                </section>
 
                                 <section>
-                                    <label for="password" class="label">Password</label>
+                                    <label for="email" class="label">Email</label>
                                     <label class="input"> <i class="icon-append fa fa-lock"></i>
-                                        <input type="password" name="password">
-                                        <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Insira a sua password</b> </label>
-                                    <div class="note">
-                                        <a href="<?php echo base_url('conta/recuperar_password');?>">Perdeu a password?</a>
-                                    </div>
+                                        <input type="email" name="email" value="<?php echo (isset($email)) ? $email : set_value('email'); ?>">
+                                        <b class="tooltip tooltip-top-right"><i class="fa fa-lock txt-color-teal"></i> Insira o seu email</b> </label>
                                 </section>
                             </fieldset>
                             <footer>
-                                <button type="submit" value="entrar" name="entrar" class="btn btn-primary">
-                                    Entrar
+                                <button type="submit" value="recuperar" name="recuperar" class="btn btn-primary">
+                                    Enviar
                                 </button>
                             </footer>
                             <?php echo form_close(); ?>
@@ -176,25 +167,16 @@ Ref: https://developer.apple.com/library/ios/documentation/AppleApplications/Ref
             $("#login-form").validate({
                 // Rules for form validation
                 rules: {
-                    utilizador: {
+                    email: {
                         required: true,
-                        number: true,
-                        minlength: 7,
-                        maxlength: 8
-                    },
-                    password: {
-                        required: true,
-                        minlength: 5,
-                        maxlength: 20
+                        email: true
                     }
                 },
                 // Messages for form validation
                 messages: {
-                    utilizador: {
-                        required: 'Por favor introduza o seu utilizador',
-                    },
-                    password: {
-                        required: 'Por favor introduza a sua password'
+                    email: {
+                        required: 'Por favor introduza o seu email',
+                        email: 'Por favor introduza um email válido'
                     }
                 },
                 // Ajax form submition
