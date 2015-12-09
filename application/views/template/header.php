@@ -1,5 +1,4 @@
 <body class="fixed-header minified smart-style-1">
-
     <!-- HEADER -->
     <header id="header">
         <div id="logo-group">
