@@ -2,23 +2,60 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Utilizadores_model extends CI_Model {
 
+    //Devolve todos os utilizadores
+    public function get_users(){
+        $users = null;
+        $query = $this->cimongo->get('users');
+
+        if($query->num_rows() > 0){
+            $users = $query->result_array();
+            return $users;
+        } else {
+            return FALSE;
+        }
+    }
+    
+    public function get_user_id($user){
+        $query = $this->cimongo->where(array('user'=> $user))->get('users');
+
+        if($query->num_rows() > 0){
+            $user = $query->result_array();
+            return $user['0']['_id'];
+        } else {
+            return FALSE;
+        }
+    }
+    
     //Activa a conta atravez do email enviado para a conta
     public function activar_conta($id){
 
         $query =  $this->cimongo->where(array('user' => $id))->set(array('activated' => 1))->update('users');
-        return $query;        
+        return $query;
     }
 
     public function get_user_by_id($id){
 
         $user = null;
-        $theObjId = new MongoId($id); 
-        $connection = new MongoClient(); 
-        $db = $connection->firehouse->users; 
-        // this will return our matching entry. 
-        $user = $db->findOne(array("_id" => $theObjId)); 
+        $theObjId = new MongoId($id);
+        $query = $this->cimongo->where(array('_id'=> $theObjId))->get('users');
+        if($query->num_rows() > 0){
+            $user = $query->result_array();
+            return $user[0];
+        } else {
+            return FALSE;
+        }
 
-        return $user;
+    }
+    
+    public function get_user($user){
+
+        $query = $this->cimongo->where(array('user'=> $user))->get('users');
+        if($query->num_rows() > 0){
+            $user = $query->result_array();
+            return $user[0];
+        } else {
+            return FALSE;
+        }
 
     }
 
@@ -36,7 +73,7 @@ class Utilizadores_model extends CI_Model {
 
     public function insert_user($dados_utilizador){
 
-        return $this->cimongo->insert('users', $dados_utilizador); 
+        return $this->cimongo->insert('users', $dados_utilizador);
     }
 
     public function update_password_by_email($email, $password){
@@ -58,7 +95,7 @@ class Utilizadores_model extends CI_Model {
 
         } else {
             return FALSE;
-        }        
+        }
     }
 
     public function check_login($utilizador, $senha){
@@ -70,8 +107,8 @@ class Utilizadores_model extends CI_Model {
             $user = $login->result_array();
             $dados = $user[0];
             if(password_verify($senha, $user[0]['pwd'])){
-                if (password_needs_rehash( $user[0]['pwd'], $this->config->item('password_algorithm'), $this->config->item('password_options'))) { 
-                    $hash = password_hash($senha, $this->config->item('password_algorithm'), $this->config->item('password_options')); 
+                if (password_needs_rehash( $user[0]['pwd'], $this->config->item('password_algorithm'), $this->config->item('password_options'))) {
+                    $hash = password_hash($senha, $this->config->item('password_algorithm'), $this->config->item('password_options'));
                     $user = array(
                         '_id' => $user[0]['_id']
                     );
@@ -79,12 +116,12 @@ class Utilizadores_model extends CI_Model {
                         'pwd'=>$hash
                     );
                     $this->cimongo->where($user)->set($pwd)->update('users');
-                }  
+                }
                 return $dados;
 
             } else {
                 return FALSE;
-            }            
+            }
         } else {
             return FALSE;
         }
