@@ -2,7 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 $config['title'] = 'FireDispatcher';
-$config['version'] = 'v0.1';
+$config['version'] = 'v0.2';
 $config['copyright'] = "&copy; 2015 José Galinha, Todo os direitos reservados.";
 $config['author'] = "José Galinha";
 $config['description'] = "Gestão de Corpos de Bombeiros";

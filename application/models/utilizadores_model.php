@@ -1,7 +1,32 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Utilizadores_model extends CI_Model {
-
+    
+    
+    public function get_user_email($user){
+        $query = $this->cimongo->where(array('user'=> $user))->get('users');
+        if($query->num_rows() > 0){
+            $array =  $query->result_array();
+            return $array[0]['email'];        
+        } else {
+            return false;
+        }        
+    }
+    
+    //Ativa/Desactiva a conta do utilizador
+    public function change_status($user){
+        $query = $this->cimongo->where(array('user'=> $user))->get('users');
+        if($query->num_rows() > 0){
+            $array =  $query->result_array();
+            $new_status = ($array[0]['status'] == 0) ? 1 : 0;
+            $update_query =  $this->cimongo->where(array('user' => $user))->set(array('status' => $new_status))->update('users');
+            return $new_status;        
+        } else {
+            return false;
+        }
+    }
+       
+    
     //Devolve todos os utilizadores
     public function get_users(){
         $users = null;
@@ -118,7 +143,6 @@ class Utilizadores_model extends CI_Model {
                     $this->cimongo->where($user)->set($pwd)->update('users');
                 }
                 return $dados;
-
             } else {
                 return FALSE;
             }

@@ -77,7 +77,7 @@
             <!-- end search mobile button -->
 
             <!-- input: search field -->
-            <form action="search.html" class="header-search pull-right">
+            <form action="#" class="header-search pull-right">
                 <input id="search-fld" type="text" name="param" placeholder="Procurar" data-autocomplete='[
 					"ActionScript",
 					"AppleScript",

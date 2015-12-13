@@ -6,10 +6,10 @@
         <span> <!-- User image size is adjusted inside CSS, it should stay as it -->
 
         <a href="javascript:void(0);" id="show-shortcut" data-action="toggleShortcut">
-          <img src="<?php echo base_url('assets/img/avatars/sunny.png'); ?>" alt="me" class="online" />
+          <img src="<?php echo base_url('assets/img/avatars/male.png'); ?>" alt="me" class="online" />
           <span>
             <?php
-              
+              echo $this->session->userdata('firstName') . " " . $this->session->userdata('lastName');
              ?>
           </span>
         <i class="fa fa-angle-down"></i>
@@ -26,7 +26,22 @@
                 <a href="<?php echo base_url('home');?>" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
             </li>
             <li>
-                <a href="inbox.html"><i class="fa fa-lg fa-fw fa-fire"></i> <span class="menu-item-parent">Bombeiros</span></a>
+                <a href="#"><i class="fa fa-lg fa-fw fa-cogs"></i> <span class="menu-item-parent">Configurações</span></a>
+                <ul>
+                    <li>
+                        <a href="#"><i class="fa fa-lg fa-fw fa-cog"></i>Perfis</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-lg fa-fw fa-cog"></i>Permissões</a>
+                    </li>
+                    <li>
+                </ul>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-lg fa-fw fa-users"></i> <span class="menu-item-parent">Bombeiros</span></a>
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-lg fa-fw fa-ambulance"></i> <span class="menu-item-parent">Veículos</span></a>
             </li>
         </ul>
     </nav>

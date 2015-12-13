@@ -18,8 +18,8 @@ class Conta extends CI_Controller {
         $user =  $this->users->get_user($user);
         
         $link = base_url('/conta/ativar/') . "/" . $user['_id'];
-        $subject = 'Ativação de conta';
-        $message = 'Caro(a) '. $user['firstName'] . ' ' . $user['lastName'] . '<br><br>' . 'Obrigado por se ter registado no FireDispatcher.<br>Para ativar a sua conta aceda ao <a href="'. $link . '">link</a> e conclua o processo.';
+        $subject = 'Confirmação de conta';
+        $message = 'Caro(a) '. $user['firstName'] . ' ' . $user['lastName'] . '<br><br>' . 'Obrigado por se ter registado no FireDispatcher.<br>Para confirmar a sua conta aceda ao <a href="'. $link . '">link</a> e conclua o processo.';
         $this->send_email($user['email'], $subject, $message);
         $this->log($user['user'], 'send activation email');
         
@@ -27,7 +27,7 @@ class Conta extends CI_Controller {
             $alerta = array(
                 "class" => "success",
                 "cabeçalho" => "Sucesso!",
-                "mensagem" => "Receberá novamente um email com o link para ativação da conta." . validation_errors()
+                "mensagem" => "Receberá novamente um email com o link para confirmação da conta." . validation_errors()
             );
             $dados = array (
                 "alerta" => $alerta

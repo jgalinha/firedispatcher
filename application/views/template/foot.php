@@ -62,9 +62,6 @@
 
   <![endif]-->
 
-<!-- Demo purpose only
-<script src="js/demo.min.js"></script>-->
-
 <!-- MAIN APP JS FILE -->
 <script src="<?php echo base_url('assets/js/app.min.js'); ?>"></script>
 
@@ -127,7 +124,10 @@
       })
   </script>
 -->
+<?php   
+        //TODO : Arranjar maneira de só aparecer com o widget
+        $this->load->view('widgets/scripts/users_widget_script.php');
+?>
+    </body>
 
-</body>
-
-</html>
+    </html>

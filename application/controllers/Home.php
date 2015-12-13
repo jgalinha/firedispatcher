@@ -12,20 +12,56 @@ class Home extends CI_Controller {
 
     public function index(){
 
-        $this->dashboard();
+
+        if($this->session->userdata('lock'))
+        {
+            $this->bloquear();
+        } else {
+            $this->dashboard();
+        }
+    }    
+
+
+    public function bloquear(){
+        if($this->input->post('captcha')) redirect('home');
+        $this->load->model('utilizadores_model', 'users');
+        $user = $this->session->userdata('user');
+        if(!$this->input->post('lock'))
+        {
+            if(!$this->session->userdata('lock')){
+                $this->session->set_userdata('lock', true);
+            }
+            $email = $this->users->get_user_email($user);
+            $data['email'] = $email;
+            $this->load->view('dashboard/lock_view', $data);
+        } else {
+            $pass = $this->input->post('lock');
+            $query = $this->users->check_login($user, $pass);
+            if($query){
+                $this->session->set_userdata('lock', false);
+                $this->dashboard();
+            }
+        }
     }
 
 	public function dashboard()	{
 
+        $this->load->model('utilizadores_model', 'users');
+        $users = $this->users->get_users();
         $data['main_view'] = "dashboard_view";
+        $data['users'] = $users;
         $this->load_page('dashboard/main', $data);
 	}
-    
-    public function sair() {      
+
+    public function sair() {
         $user = $this->session->userdata('user');
         $this->log($user, 'logout');
         $this->session->sess_destroy();
         redirect('conta/entrar');
+    }
+    
+    private function load_widgets(){
+        $user = $this->session->userdata('user');
     }
 
     private function log($user, $movement, $log = null){
@@ -34,7 +70,7 @@ class Home extends CI_Controller {
     }
 
     private function load_page($page, $data = null){
-        
+
 		$this->load->view('template/head');
         $this->load->view('template/header');
         $this->load->view('template/left_panel');
