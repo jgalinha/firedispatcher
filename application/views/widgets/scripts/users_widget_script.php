@@ -111,7 +111,7 @@
         });
     });
     
-    function smartAlert(title, content, color, icon, time = null) {
+    function smartAlert(title, content, color, icon, time) {
 
         $.smallBox({
             title: title,
