@@ -19,6 +19,7 @@ class Utilizadores_model extends CI_Model {
         if($query->num_rows() > 0){
             $array =  $query->result_array();
             $new_status = ($array[0]['status'] == 0) ? 1 : 0;
+            //TODO: remover variável $update_query ou usa-la para devolver false
             $update_query =  $this->cimongo->where(array('user' => $user))->set(array('status' => $new_status))->update('users');
             return $new_status;        
         } else {

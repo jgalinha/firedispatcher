@@ -126,7 +126,12 @@
 -->
 <?php   
         //TODO : Arranjar maneira de só aparecer com o widget
-        $this->load->view('widgets/scripts/users_widget_script.php');
+        if($page == "dashboard"){
+            $this->load->view('widgets/scripts/users_widget_script.php');
+        }
+        if($page == "permissoes"){
+            $this->load->view('widgets/scripts/permissoes_widget_script.php');
+        }
 ?>
     </body>
 

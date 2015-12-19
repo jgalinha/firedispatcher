@@ -47,6 +47,7 @@ class Home extends CI_Controller {
 
         $this->load->model('utilizadores_model', 'users');
         $users = $this->users->get_users();
+        $data['page'] = "dashboard";
         $data['users'] = $users;
         $this->load_page('dashboard/main', $data);
 	}

@@ -22,19 +22,21 @@
     <!-- NAVIGATION : This navigation is also responsive-->
     <nav>
         <ul>
-            <li class="active">
+            <li>
                 <a href="<?php echo base_url('home');?>" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
             </li>
             <li>
                 <a href="#"><i class="fa fa-lg fa-fw fa-cogs"></i> <span class="menu-item-parent">Configurações</span></a>
                 <ul>
-                    <li>
-                        <a href="#"><i class="fa fa-lg fa-fw fa-cog"></i>Perfis</a>
+                    <li class="active">
+                        <a href="<?php echo base_url('configuracoes/estrutura'); ?>"><i class="fa fa-lg fa-fw fa-cog"></i>Estrutura</a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-lg fa-fw fa-cog"></i>Permissões</a>
+                        <a href="<?php echo base_url('configuracoes/perfis'); ?>"><i class="fa fa-lg fa-fw fa-cog"></i>Perfis</a>
                     </li>
                     <li>
+                        <a href="<?php echo base_url('configuracoes/utilizadores'); ?>"><i class="fa fa-lg fa-fw fa-user"></i>Utilizadores</a>
+                    </li>
                 </ul>
             </li>
             <li>
