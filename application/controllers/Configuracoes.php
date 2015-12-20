@@ -25,9 +25,11 @@ class Configuracoes extends CI_Controller {
     }
     
     public function perfis(){
-        $this->load->model('configuracoesModel', 'conf');
-        $data['struct'] = $this->conf->getStruct();
-        $data['page'] = "permissoes";
+        $this->load->model('profilesModel', 'profile');
+		$this->load->model('configuracoesModel', 'conf');
+        $data['profiles'] = $this->profile->getProfiles();
+		$data['struct'] = $this->conf->getStruct();
+        $data['page'] = "perfis";
         $data['breadcrumb'] = array(
             "0" => "Home",
             "1" => "Configurações",

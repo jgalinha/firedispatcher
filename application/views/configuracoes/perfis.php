@@ -50,10 +50,11 @@
         <!-- widget grid -->
         <section id="widget-grid" class="">
             <div class="row">
-                <article class="col-sm-12 col-md-12 col-lg-12">
+                <!-- NEW WIDGET START -->
+                <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
                     <!-- Widget ID (each widget will need unique ID)-->
-                    <div class="jarviswidget jarviswidget-color-darken" id="wid-id-permissoes" data-widget-editbutton="false">
+					<div class="jarviswidget jarviswidget-color-darken" id="wid-id-perfis" data-widget-fullscreenbutton="false" data-widget-editbutton="false" data-widget-deletebutton="false" data-widget-sortable="false">
                         <!-- widget options:
 usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 
@@ -68,9 +69,14 @@ data-widget-sortable="false"
 
 -->
                         <header>
-                            <span class="widget-icon"> <i class="fa fa-sitemap"></i> </span>
-                            <h2>Estrutura de Permissões</h2>
-
+                            <span class="widget-icon"> <i class="fa fa-cog"></i> </span>
+                            <h2>Perfis de Utilizador</h2>
+                            
+							<div class="widget-toolbar">
+								<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+									Adicionar perfil
+								</button>
+							</div>
                         </header>
 
                         <!-- widget div-->
@@ -84,38 +90,34 @@ data-widget-sortable="false"
                             <!-- end widget edit box -->
 
                             <!-- widget content -->
-                            <div class="widget-body">
-                                <div class="tree smart-form">
-                                    <ul>
-                                        <li>
-                                            <span><i class="fa fa-lg fa-folder-open"></i> <?php echo $this->config->item('title'); ?></span>
-                                            <ul>
-                                               <?php
-                                                
-                                                function tree($struct){
-                                                    foreach ($struct as $st){
-                                                        if(is_array($st)){
-                                                            if($st['sub']){
-                                                                echo "<li>";
-                                                                echo '<span><i class="fa fa-lg fa-minus-circle"></i> ' . $st['name'] . '</span>'; 
-                                                                echo "<ul>";
-                                                                tree($st);
-                                                                echo "</ul>";
-                                                                echo '</li>';   
-                                                            }else{
-                                                                echo "<li>";
-                                                                echo '<span><i class="icon-leaf"></i> ' . $st['name'] . '</span>';
-                                                                echo '</li>';    
-                                                            }
-                                                        }
-                                                    }
-                                                }                                                
-                                                tree($struct);
-                                                ?>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
+                            <div class="widget-body no-padding">
+                            <?php 
+								if(!$profiles){
+									print('<div class="alert alert-info no-margin fade in">
+										<i class="fa-fw fa fa-info"></i>
+										Não existem registos para mostar!
+									</div>');
+								}
+								?>
+
+                            <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Nome</th>
+                                            <th>Descrição</th>
+                                            <th>Permissões</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                           <?php 
+												if($profiles){
+													
+												}
+											?>
+                                    </tbody>
+                                </table>
 
                             </div>
                             <!-- end widget content -->
@@ -137,6 +139,119 @@ echo "Key: $key; Value: $value<br />\n";
 -->
         </section>
         <!-- end widget grid -->
+        
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="modal-title">
+							Adicionar perfil
+						</h4>
+					</div>
+					<div class="modal-body no-padding">
+						<form id="perfil-form" class="smart-form" method="post">
+							<fieldset>
+								<section>
+									<div class="row">
+										<div class="col col-md-12">
+											<label class="input">
+												<input type="text" name="nome" placeholder="Nome do perfil">
+											</label>
+										</div>
+									</div>
+								</section>
+
+								<section>
+									<div class="row">
+										<div class="col col-md-12">
+											<label class="textarea textarea-expandable"> 										
+												<textarea class="custom-scroll" rows="3" name="descricao" placeholder="Descrição do perfil"></textarea> 
+											</label>
+										</div>
+									</div>
+								</section>
+								<section>
+									<div class="row">
+										<div class="col col-md-12">
+											<h5>Permissões</h5>
+											<div class="well well-sm well-primary tree">
+												<ul>
+													<li>
+														<span><i class="fa fa-lg fa-home"></i> <?php echo $this->config->item('title'); ?></span>
+														<ul>
+															<?php
+															
+															function toggle($value, $vName, $pName){
+																if($value){
+																	echo '<label class="toggle">';
+																	echo '<input type="checkbox" name="'. $pName . '-' . $vName . '" checked="checked">';
+																	echo '<i data-swchon-text="ON" data-swchoff-text="OFF"></i>' . $vName . '</label>';
+																}else{
+																	echo '<label class="toggle">';
+																	echo '<input type="checkbox" name="'. $pName . '-' . $vName . '">';
+																	echo '<i data-swchon-text="ON" data-swchoff-text="OFF"></i>' . $vName . '</label>';
+																}
+															}
+
+															function tree($struct){
+																foreach ($struct as $st){
+																	if(is_array($st)){
+																		if($st['sub']){
+																			echo '<li>';
+																			echo '<span><i class="fa fa-lg fa-plus-circle"></i> ' . $st['name'] . '</span>'; 
+																			echo "<ul>";
+																			tree($st);
+																			echo "</ul>";
+																			echo '</li>';   
+																		}else{
+																			echo '<li style="display:none">';
+																			echo '<span><i class="fa fa-lg fa-plus-circle"></i> ' . $st['name'] . '</span>';
+																			echo "<ul>";
+																			echo '<li style="display:none"><span><i class="icon-leaf"></i> ';
+																			toggle($st['view'], "Consultar", $st['name']);
+																			echo '</span></li>';
+																			echo '<li style="display:none"><span><i class="icon-leaf"></i> ';
+																			toggle($st['view'], "Editar", $st['name']);
+																			echo '</span></li>';
+																			echo "</ul>";
+																			echo '</li>';    
+																		}
+																	}
+																}
+															}                                                
+															tree($struct);
+															?>
+														</ul>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</section>
+							</fieldset>
+
+							<footer>
+								<button type="submit" class="btn btn-primary">
+									Guardar
+								</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal">
+									Cancelar
+								</button>
+
+							</footer>
+						</form>						
+
+
+					</div>
+
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+        
     </div>
     <!-- END MAIN CONTENT -->
 

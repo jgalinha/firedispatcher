@@ -129,6 +129,9 @@
         if($page == "dashboard"){
             $this->load->view('widgets/scripts/users_widget_script.php');
         }
+        if($page == "perfis"){
+			$this->load->view('configuracoes/scripts/perfis_script.php');
+        }
         if($page == "permissoes"){
             $this->load->view('widgets/scripts/permissoes_widget_script.php');
         }
