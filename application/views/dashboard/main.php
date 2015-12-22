@@ -1,6 +1,5 @@
 <!-- MAIN PANEL -->
 <div id="main" role="main">
-
     <!-- RIBBON -->
     <div id="ribbon">
 

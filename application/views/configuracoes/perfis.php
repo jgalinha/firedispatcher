@@ -112,6 +112,8 @@ data-widget-sortable="false"
                                     <tbody>
                                         
                                            <?php 
+
+										print("<pre>".print_r($struct,true)."</pre>");
 												if($profiles){
 													
 												}
@@ -153,13 +155,14 @@ echo "Key: $key; Value: $value<br />\n";
 						</h4>
 					</div>
 					<div class="modal-body no-padding">
-						<form id="perfil-form" class="smart-form" method="post">
+						<form id="perfil-form" class="smart-form" method="post" action="<?php echo base_url('configuracoes/perfis'); ?>">
 							<fieldset>
 								<section>
 									<div class="row">
 										<div class="col col-md-12">
 											<label class="input">
-												<input type="text" name="nome" placeholder="Nome do perfil">
+												<input type="text" name="nome" placeholder="Nome do perfil" required>
+												<input type="hidden" name="captcha">
 											</label>
 										</div>
 									</div>
@@ -169,7 +172,7 @@ echo "Key: $key; Value: $value<br />\n";
 									<div class="row">
 										<div class="col col-md-12">
 											<label class="textarea textarea-expandable"> 										
-												<textarea class="custom-scroll" rows="3" name="descricao" placeholder="Descrição do perfil"></textarea> 
+												<textarea class="custom-scroll" rows="3" name="descricao" placeholder="Descrição do perfil" required></textarea> 
 											</label>
 										</div>
 									</div>
@@ -202,13 +205,13 @@ echo "Key: $key; Value: $value<br />\n";
 																	if(is_array($st)){
 																		if($st['sub']){
 																			echo '<li>';
-																			echo '<span><i class="fa fa-lg fa-plus-circle"></i> ' . $st['name'] . '</span>'; 
+																			echo '<span><i class="fa fa-lg fa-plus-circle"></i> ' . $st['name'] . '</span>';
 																			echo "<ul>";
 																			tree($st);
 																			echo "</ul>";
 																			echo '</li>';   
 																		}else{
-																			echo '<li style="display:none">';
+																			echo '<li>';
 																			echo '<span><i class="fa fa-lg fa-plus-circle"></i> ' . $st['name'] . '</span>';
 																			echo "<ul>";
 																			echo '<li style="display:none"><span><i class="icon-leaf"></i> ';
@@ -235,7 +238,7 @@ echo "Key: $key; Value: $value<br />\n";
 							</fieldset>
 
 							<footer>
-								<button type="submit" class="btn btn-primary">
+								<button type="submit" name="guardar" value="guardar" class="btn btn-primary">
 									Guardar
 								</button>
 								<button type="button" class="btn btn-default" data-dismiss="modal">

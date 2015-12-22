@@ -72,7 +72,7 @@ class Home extends CI_Controller {
 
 		$this->load->view('template/head');
         $this->load->view('template/header');
-        $this->load->view('template/left_panel');
+        $this->load->view('template/left_panel', $data);
         $this->load->view($page, $data);
         $this->load->view('template/shortcut');
         $this->load->view('template/footer');

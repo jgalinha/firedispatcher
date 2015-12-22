@@ -18,23 +18,22 @@
         </span>
     </div>
     <!-- end user info -->
-
     <!-- NAVIGATION : This navigation is also responsive-->
     <nav>
         <ul>
-            <li>
+			<li <?php if($page == "dashboard") echo 'class="active"'; ?>>
                 <a href="<?php echo base_url('home');?>" title="Dashboard"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Dashboard</span></a>
             </li>
             <li>
                 <a href="#"><i class="fa fa-lg fa-fw fa-cogs"></i> <span class="menu-item-parent">Configurações</span></a>
                 <ul>
-                    <li class="active">
+                    <li <?php if($page == "estrutura") echo 'class="active"'; ?>>
                         <a href="<?php echo base_url('configuracoes/estrutura'); ?>"><i class="fa fa-lg fa-fw fa-cog"></i>Estrutura</a>
                     </li>
-                    <li>
+					<li <?php if($page == "perfis") echo 'class="active"'; ?>>
                         <a href="<?php echo base_url('configuracoes/perfis'); ?>"><i class="fa fa-lg fa-fw fa-cog"></i>Perfis</a>
                     </li>
-                    <li>
+					<li <?php if($page == "utilizadores") echo 'class="active"'; ?>>
                         <a href="<?php echo base_url('configuracoes/utilizadores'); ?>"><i class="fa fa-lg fa-fw fa-user"></i>Utilizadores</a>
                     </li>
                 </ul>

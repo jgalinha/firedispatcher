@@ -19,7 +19,44 @@
                 $(this).attr('title', 'Fechar ramo').find(' > i').removeClass().addClass('fa fa-lg fa-minus-circle');
             }
             e.stopPropagation();
-        });			
+        });		
+		
+		runAllForms();
+		$(function () {
+			// Validation
+			$("#perfil-form").validate({
+				// Rules for form validation
+				rules: {
+					nome: {
+						required: true,
+					},
+					descricao: {
+						required: true,
+					}
+				},
+				// Messages for form validation
+				messages: {
+					nome: {
+						required: 'Por favor introduza o nome do perfil',
+					},
+					descricao: {
+						required: 'Por favor introduza a descrição do perfil',
+					}
+				},
+				// Ajax form submition
+				submitHandler: function (form) {
+					$(form).ajaxSubmit({
+						success: function () {
+							$("#perfil-form").addClass('submited');
+						}
+					});
+				},
+				// Do not change code below
+				errorPlacement: function (error, element) {
+					error.insertAfter(element.parent());
+				}
+			});
+		});
 
     })
 
