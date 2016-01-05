@@ -100,22 +100,35 @@ data-widget-sortable="false"
 								}
 								?>
 
-                            <table class="table table-bordered table-striped">
+								<table data-order='[[ 3, "asc" ]]' id="dt_basic" class="table table-bordered">
                                     <thead>
                                         <tr>
-                                            <th>Nome</th>
-                                            <th>Descrição</th>
-                                            <th>Permissões</th>
-                                            <th></th>
+											<th data-class="expand">Nome</th>
+											<th data-hide="phone,tablet">Descrição</th>
+											<th data-hide="always">Data de criação</th>
+											<th data-hide="always">Data da última alteração</th>
+											<th data-hide="always">Permissões</th>
+											<th data-hide="phone,tablet">Operações</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        
-                                           <?php 
+                                    <tbody id="perfis">
+                                    <?php 
 
-										print("<pre>".print_r($struct,true)."</pre>");
+										//print("<pre>".print_r($profiles,true)."</pre>");
 												if($profiles){
-													
+													foreach ($profiles as $profile)
+													{
+														echo "<tr id=" . $profile->name . ">";
+														echo "<td>" . $profile->name . "</td>";
+														echo "<td>" . $profile->description . "</td>";
+														echo "<td>" . date('H:i:s d-m-Y', $profile->create_date->sec) . "</td>";
+														echo "<td>" . date('H:i:s d-m-Y', $profile->last_edit->sec) . "</td>";
+														echo "<td><pre>".print_r($profile->permissions,true)."</pre></td>";
+														//echo date('Y-m-d H:i:s', $profile['last_edit']->sec);
+														echo '<td><button class="btn btn-xs btn-default" data-original-title="Editar" onclick=""><i class="fa fa-pencil"></i></button>';
+														echo '<button class="btn btn-xs btn-default" data-original-title="Apagar" onclick=""><i class="fa fa-times"></i></button></td>';
+														echo "</tr>";
+													}
 												}
 											?>
                                     </tbody>

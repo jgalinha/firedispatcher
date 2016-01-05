@@ -27,11 +27,11 @@ class Configuracoes extends CI_Controller {
     public function perfis(){
 		if($this->input->post('guardar') === "guardar"){
 			if($this->input->post('catchar')) redirect('Configuracoes/perfis');
-			$this->addProfile();
+			$data['alerta'] = $this->addProfile();
 		}
         $this->load->model('profilesModel', 'profile');
 		$this->load->model('configuracoesModel', 'conf');
-        $data['profiles'] = $this->profile->getProfiles();
+        $data['profiles'] = $this->profile->getProfiles(true);
 		$data['struct'] = $this->conf->getStruct();
         $data['page'] = "perfis";
         $data['breadcrumb'] = array(
@@ -43,16 +43,56 @@ class Configuracoes extends CI_Controller {
     }
 	
 	private function addProfile(){
-		$this->load->model('configuracoesModel', 'conf');
-		$profile['name'] = $this->input->post('nome');
-		$profile['description'] = $this->input->post('descricao');
-		$struct = $this->conf->getStruct();
-		$profile['permissions'] = $this->createPermissionsArray($struct);
-		$profile['create_date'] = new MongoDate();
-		$profile['last_edit'] = new MongoDate();
+		$alerta = null;
+		$this->form_validation->set_rules('nome', 'Nome', 'trim|required');
+		$this->form_validation->set_rules('descricao', 'Descrição', 'trim|required');
+		if($this->form_validation->run() === TRUE){
+			$inserted_profile = null;
+			$this->load->model('configuracoesModel', 'conf');
+			$this->load->model('profilesModel', 'profiles');
+			$profile['name'] = $this->input->post('nome');
+			$profile['description'] = $this->input->post('descricao');
+			$struct = $this->conf->getStruct();
+			$profile['permissions'] = $this->createPermissionsArray($struct);
+			$profile['create_date'] = new MongoDate();
+			$profile['last_edit'] = new MongoDate();
+			if(!$this->profiles->checkName($profile['name'])){
+				if($this->profiles->createProfile($profile)){
+					
+					$this->log($this->session->userdata('user'), "profile created", $profile);
+					$alerta = array(
+						"class" => "success",
+						"cabeçalho" => "Sucesso!",
+						"mensagem" => "Perfil criado com sucesso!<br>"
+					);
+				} else {
+					//Erro ao criar o profile
+					$alerta = array(
+						"class" => "danger",
+						"cabeçalho" => "Erro!",
+						"mensagem" => "Aconteceu um erro ao criar o perfil!<br>"
+					);
+				}
+				
+			} else {
+				//Profile já existent
+				$alerta = array(
+					"class" => "danger",
+					"cabeçalho" => "Erro!",
+					"mensagem" => "O Perfil que está a tentar criar já existe!<br>"
+				);
+			}
+		} else {
+			//ERRO NO PREENCHIMENTO DO FORMULARIO
+			$alerta = array(
+				"class" => "danger",
+				"cabeçalho" => "Erro!",
+				"mensagem" => "Erro no preenchimento!<br>" . validation_errors()
+			);
+		}
 		//echo date('Y-m-d H:i:s', $profile['last_edit']->sec);
-		print("<pre>".print_r($profile,true)."</pre>");
-		exit();
+		//print("<pre>".print_r($inserted_profile,true)."</pre>");
+		return $alerta;
 	}
 	
 	private function createPermissionsArray($struct, $array = null){
@@ -94,4 +134,9 @@ class Configuracoes extends CI_Controller {
         $this->load->view('template/footer');
         $this->load->view('template/foot');
     }
+
+	private function log($user, $movement, $log = null){
+		$this->load->model('log_model');
+		$this->log_model->log($user, $movement, $log);
+	}
 }

@@ -8,6 +8,7 @@ class Log_model extends CI_Model
         $dados = array(
             'movement' => $movement,
             'user' => $utilizador,
+			'date' => new MongoDate(),
             'log' => $log
         );
         $this->cimongo->insert('log', $dados);

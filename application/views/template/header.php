@@ -1,10 +1,10 @@
-<body class="fixed-header minified smart-style-1">
+<body class="menu-on-top smart-style-2 fixed-header fixed-navigation">
     <!-- HEADER -->
     <header id="header">
         <div id="logo-group">
 
             <!-- PLACE YOUR LOGO HERE -->
-            <span id="logo"></span>
+           	<span id="logo"></span>
             <!-- END LOGO PLACEHOLDER -->
 
             <!-- Note: The activity badge color changes when clicked and resets the number to 0
@@ -113,7 +113,8 @@
                 <span> <a href="javascript:void(0);" data-action="launchFullscreen" title="Full Screen"><i class="fa fa-arrows-alt"></i></a> </span>
             </div>
             <!-- end fullscreen button -->
-
+	
+			
 
 
         </div>
