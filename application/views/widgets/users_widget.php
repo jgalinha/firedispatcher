@@ -7,7 +7,6 @@
         <header>
             <span class="widget-icon"> <i class="fa fa-table"></i> </span>
             <h2>Utilizadores</h2>
-
         </header>
 
         <!-- widget div-->

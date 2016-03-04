@@ -12,7 +12,6 @@
 
     $(document).ready(function () {
         pageSetUp();
-
         /* BASIC ;*/
         var responsiveHelper_dt_basic = undefined;
         var responsiveHelper_datatable_fixed_column = undefined;

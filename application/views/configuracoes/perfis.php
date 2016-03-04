@@ -118,15 +118,15 @@ data-widget-sortable="false"
 												if($profiles){
 													foreach ($profiles as $profile)
 													{
-														echo "<tr id=" . $profile->name . ">";
+														echo '<tr id="' . $profile->name . '">';
 														echo "<td>" . $profile->name . "</td>";
 														echo "<td>" . $profile->description . "</td>";
 														echo "<td>" . date('H:i:s d-m-Y', $profile->create_date->sec) . "</td>";
 														echo "<td>" . date('H:i:s d-m-Y', $profile->last_edit->sec) . "</td>";
 														echo "<td><pre>".print_r($profile->permissions,true)."</pre></td>";
 														//echo date('Y-m-d H:i:s', $profile['last_edit']->sec);
-														echo '<td><button class="btn btn-xs btn-default" data-original-title="Editar" onclick=""><i class="fa fa-pencil"></i></button>';
-														echo '<button class="btn btn-xs btn-default" data-original-title="Apagar" onclick=""><i class="fa fa-times"></i></button></td>';
+														echo '<td><button data-profile="'. $profile->name .'" class="btn btn-xs btn-default" data-original-title="Editar"><i class="fa fa-pencil"></i></button>';
+														echo '<button data-profile="'. $profile->name .'" class="btn btn-xs btn-default" data-original-title="Apagar"><i class="fa fa-times"></i></button></td>';
 														echo "</tr>";
 													}
 												}
@@ -203,13 +203,13 @@ echo "Key: $key; Value: $value<br />\n";
 															
 															function toggle($value, $vName, $pName){
 																if($value){
-																	echo '<label class="toggle">';
+																	echo '<label class="checkbox inline-block">';
 																	echo '<input type="checkbox" name="'. $pName . '-' . $vName . '" checked="checked">';
-																	echo '<i data-swchon-text="ON" data-swchoff-text="OFF"></i>' . $vName . '</label>';
+																	echo '<i></i>' . $vName . '</label>';
 																}else{
-																	echo '<label class="toggle">';
+																	echo '<label class="checkbox inline-block">';
 																	echo '<input type="checkbox" name="'. $pName . '-' . $vName . '">';
-																	echo '<i data-swchon-text="ON" data-swchoff-text="OFF"></i>' . $vName . '</label>';
+																	echo '<i></i>' . $vName . '</label>';
 																}
 															}
 
@@ -242,6 +242,120 @@ echo "Key: $key; Value: $value<br />\n";
 															tree($struct);
 															?>
 														</ul>
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</section>
+							</fieldset>
+
+							<footer>
+								<button type="submit" name="guardar" value="guardar" class="btn btn-primary">
+									Guardar
+								</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal">
+									Cancelar
+								</button>
+
+							</footer>
+						</form>						
+
+
+					</div>
+
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+       
+		<!-- Modal -->
+		<div class="modal fade" id="myModalEdit" tabindex="-1" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="modal-title">
+							Editar perfil
+						</h4>
+					</div>
+					<div class="modal-body no-padding">
+						<form id="perfil-edit-form" class="smart-form" method="post" action="<?php echo base_url('configuracoes/perfis'); ?>">
+							<fieldset>
+								<section>
+									<div class="row">
+										<div class="col col-md-12">
+											<label class="input">
+												<input type="text" name="nomeEdit" placeholder="Nome do perfil" required>
+												<input type="hidden" name="captcha">
+											</label>
+										</div>
+									</div>
+								</section>
+
+								<section>
+									<div class="row">
+										<div class="col col-md-12">
+											<label class="textarea textarea-expandable"> 										
+												<textarea class="custom-scroll" rows="3" name="descricaoEdit" placeholder="Descrição do perfil" required></textarea> 
+											</label>
+										</div>
+									</div>
+								</section>
+								<section>
+									<div class="row">
+										<div class="col col-md-12">
+											<h5>Permissões</h5>
+											<div class="well well-sm well-primary tree">
+												<ul>
+													<li>
+														<span><i class="fa fa-lg fa-home"></i> <?php echo $this->config->item('title'); ?></span>
+														<ul>
+															<?php
+															$editar = "editar";
+															function toggle_editar($value, $vName, $pName){
+																if($value){
+																	echo '<label class="checkbox inline-block">';
+																	echo '<input type="checkbox" name="'. $pName . '-' . $vName . '" checked="checked">';
+																	echo '<i></i>' . $vName . '</label>';
+																}else{
+																	echo '<label class="checkbox inline-block">';
+																	echo '<input type="checkbox" name="'. $pName . '-' . $vName . '-Editar">';
+																	echo '<i></i>' . $vName . '</label>';
+																}
+															}
+
+															function tree_editar($struct){
+																foreach ($struct as $st){
+																	if(is_array($st)){
+																		if($st['sub']){
+																			echo '<li>';
+																			echo '<span><i class="fa fa-lg fa-plus-circle"></i> ' . $st['name'] . '</span>';
+																			echo "<ul>";
+																			tree_editar($st);
+																			echo "</ul>";
+																			echo '</li>';   
+																		}else{
+																			echo '<li>';
+																			echo '<span><i class="fa fa-lg fa-plus-circle"></i> ' . $st['name'] . '</span>';
+																			echo "<ul>";
+																			echo '<li style="display:none"><span><i class="icon-leaf"></i> ';
+																			toggle_editar($st['view'], "Consultar", $st['name']);
+																			echo '</span></li>';
+																			echo '<li style="display:none"><span><i class="icon-leaf"></i> ';
+																			toggle_editar($st['view'], "Editar", $st['name']);
+																			echo '</span></li>';
+																			echo "</ul>";
+																			echo '</li>';    
+																		}
+																	}
+																}
+															}                                                
+															tree_editar($struct);
+															?>
+														</ul>
+														
 													</li>
 												</ul>
 											</div>

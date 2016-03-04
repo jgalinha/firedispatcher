@@ -1,10 +1,10 @@
-<body class="menu-on-top smart-style-2 fixed-header fixed-navigation">
+<body class="smart-style-1 fixed-header fixed-navigation minified">
     <!-- HEADER -->
     <header id="header">
         <div id="logo-group">
 
             <!-- PLACE YOUR LOGO HERE -->
-           	<span id="logo"></span>
+			<span id="logo"><?php echo " " . $this->config->item('title') ?></span>
             <!-- END LOGO PLACEHOLDER -->
 
             <!-- Note: The activity badge color changes when clicked and resets the number to 0

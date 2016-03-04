@@ -97,7 +97,7 @@ var root = this,
      * if you have too many widgets running at once 
      * (must have enableJarvisWidgets = true)
      */
-    enableMobileWidgets = false,
+    enableMobileWidgets = true,
     /*
      * Turn on fast click for mobile devices
      * Enable this to activate fastclick plugin

@@ -11,6 +11,27 @@ class Configuracoes extends CI_Controller {
             redirect('home/bloquear');
         }
     }
+	
+	public function getProfile(){
+		$profile = $this->input->post('profile');
+		$this->load->model('profilesModel', 'profile');
+		$result = $this->profile->getProfile($profile);
+		$array = array(
+			'result' => $result,
+		);
+		echo json_encode($array);
+	}
+	
+	public function removeProfile(){
+		$profile = $this->input->post('profile');
+		$this->load->model('profilesModel', 'profile');
+		$result = $this->profile->removeProfile($profile);
+		$this->log($this->session->userdata('user'), "profile " . $profile . " remove", $result);
+		$array = array(
+			'result' => $result,
+		);
+		echo json_encode($array);
+	}
 
     public function estrutura(){
         $this->load->model('configuracoesModel', 'conf');

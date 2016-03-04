@@ -3,17 +3,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class ProfilesModel extends CI_Model 
 {
+	public function getProfile($profile, $object = false){
+		$result = null;
+		$query = $this->cimongo->where(array('name'=> $profile))->get('profiles');
+		if($query->num_rows() > 0){
+			if(!$object){
+				$result = $query->result_array()[0];
+			} else {
+				$result = $query->result_object()[0];
+			}
+		}
+		return $result;
+	}
+	
+	public function removeProfile($profile){
+		$query = $this->cimongo->where(array('name'=> $profile))->delete('profiles');
+		return $query;
+	}
+	
 	public function createProfile($profile){
 		return $this->cimongo->insert('profiles', $profile);
 	}
 	
 	public function checkName($profile){
-		$login = $this->cimongo->where(array('name'=> $profile))->get('profiles');
-		if($login->num_rows() > 0){
+		$query = $this->cimongo->where(array('name'=> $profile))->get('profiles');
+		if($query->num_rows() > 0){
 			return TRUE;
-		} else {
-			return FALSE;
 		}
+		return FALSE;
 	}
 	
     public function getProfiles($object = false){
