@@ -123,11 +123,21 @@
 
       })
   </script>
+  
+  
 -->
+
+<script type="text/javascript">
+	// DO NOT REMOVE : GLOBAL FUNCTIONS!
+	$(document).ready(function () {
+		pageSetUp();
+	});
+</script>	
+
 <?php   
         //TODO : Arranjar maneira de só aparecer com o widget
-        if($page == "dashboard"){
-            $this->load->view('widgets/scripts/users_widget_script.php');
+        if($page == "utilizadores"){
+			$this->load->view('configuracoes/scripts/users_script.php');
         }
         if($page == "perfis"){
 			$this->load->view('configuracoes/scripts/perfis_script.php');
@@ -135,6 +145,9 @@
         if($page == "permissoes"){
             $this->load->view('widgets/scripts/permissoes_widget_script.php');
         }
+		if($page == "logs"){
+			$this->load->view('configuracoes/scripts/logs_script.php');
+		}
 ?>
     </body>
 

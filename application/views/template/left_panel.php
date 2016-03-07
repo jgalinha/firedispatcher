@@ -36,6 +36,9 @@
 					<li <?php if($page == "utilizadores") echo 'class="active"'; ?>>
                         <a href="<?php echo base_url('configuracoes/utilizadores'); ?>"><i class="fa fa-lg fa-fw fa-user"></i>Utilizadores</a>
                     </li>
+					<li <?php if($page == "logs") echo 'class="active"'; ?>>
+						<a href="<?php echo base_url('configuracoes/logs'); ?>"><i class="fa fa-lg fa-fw fa-book "></i>Logs</a>
+					</li>
                 </ul>
             </li>
             <li>
@@ -49,6 +52,5 @@
     <span class="minifyme" data-action="minifyMenu">
       <i class="fa fa-arrow-circle-left hit"></i>
     </span>
-
 </aside>
 <!-- END NAVIGATION -->

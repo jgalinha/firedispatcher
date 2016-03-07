@@ -13,4 +13,17 @@ class Log_model extends CI_Model
         );
         $this->cimongo->insert('log', $dados);
     }
+	
+	public function getLogs($object = false){
+		$query = $this->cimongo->get('log');
+		if($query->num_rows() > 0){
+			if(!$object){
+				$result = $query->result_array();
+			} else {
+				$result = $query->result_object();
+			}
+			return $result;
+		}
+		return FALSE;
+	}
 }

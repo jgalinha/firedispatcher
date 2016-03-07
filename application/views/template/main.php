@@ -27,7 +27,7 @@
 
         </div>-->
         <!-- widget grid -->
-        <section id="widget-grid" class="">
+        <section id="widget-grid">
 
         </section>
         <!-- end widget grid -->

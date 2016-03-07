@@ -6,6 +6,7 @@
 <script src="<?php echo base_url('assets/js/plugin/datatable-responsive/datatables.responsive.min.js'); ?>"></script>
 
 <script src="<?php echo base_url('assets/js/plugin/bootstrap-progressbar/bootstrap-progressbar.min.js'); ?>"></script>
+<script src="<?php echo base_url('assets/js/plugin/bootstrap-tags/bootstrap-tagsinput.min.js'); ?>"></script>
 
 <script type="text/javascript">
     // DO NOT REMOVE : GLOBAL FUNCTIONS!

@@ -27,25 +27,6 @@
     <!-- MAIN CONTENT -->
     <div id="content">
         <div class="row">
-            <div class="col-xs-12 col-sm-7 col-md-7 col-lg-4">
-                <h1 class="page-title txt-color-blueDark"><i class="fa-fw fa fa-cog"></i> 
-                <?php
-                    $i = 0;
-                    foreach ($breadcrumb as $bread) {
-                        if($i == 1){
-                            echo "<span> > ";
-                        } else if ($i > 0){
-                            echo ">";
-                        }
-                        echo " " . $bread . " ";
-                        if ($i == 0){
-                        }
-                        $i ++;
-                    }
-                    echo "</span>";
-                ?></h1>
-            </div>
-
         </div>
         <!-- widget grid -->
         <section id="widget-grid" class="">
@@ -53,7 +34,7 @@
                 <article class="col-sm-12 col-md-12 col-lg-12">
 
                     <!-- Widget ID (each widget will need unique ID)-->
-                    <div class="jarviswidget jarviswidget-color-darken" id="wid-id-permissoes" data-widget-editbutton="false">
+                    <div class="jarviswidget jarviswidget-color-red" id="wid-id-permissoes" data-widget-editbutton="false">
                         <!-- widget options:
 usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
 

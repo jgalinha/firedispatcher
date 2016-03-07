@@ -19,6 +19,12 @@ class Home extends CI_Controller {
             $this->dashboard();
         }
     }    
+	
+
+	public function dashboard()	{
+		$data['page'] = "dashboard";
+		$this->load_page('dashboard/main', $data);
+	}
 
 
     public function bloquear(){
@@ -39,18 +45,11 @@ class Home extends CI_Controller {
             if($query){
                 $this->session->set_userdata('lock', false);
                 $this->dashboard();
-            }
+            } else {
+				redirect('home');
+			}
         }
     }
-
-	public function dashboard()	{
-
-        $this->load->model('utilizadores_model', 'users');
-        $users = $this->users->get_users();
-        $data['page'] = "dashboard";
-        $data['users'] = $users;
-        $this->load_page('dashboard/main', $data);
-	}
 
     public function sair() {
         $user = $this->session->userdata('user');

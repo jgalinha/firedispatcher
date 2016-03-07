@@ -95,6 +95,38 @@
 					error.insertAfter(element.parent());
 				}
 			});
+			$("#perfil-edit-form").validate({
+				// Rules for form validation
+				rules: {
+					nomeEdit: {
+						required: true,
+					},
+					descricaoEdit: {
+						required: true,
+					}
+				},
+				// Messages for form validation
+				messages: {
+					nomeEdit: {
+						required: 'Por favor introduza o nome do perfil',
+					},
+					descricaoEdit: {
+						required: 'Por favor introduza a descrição do perfil',
+					}
+				},
+				// Ajax form submition
+				submitHandler: function (form) {
+					$(form).ajaxSubmit({
+						success: function () {
+							$("#perfil-edit-form").addClass('submited');
+						}
+					});
+				},
+				// Do not change code below
+				errorPlacement: function (error, element) {
+					error.insertAfter(element.parent());
+				}
+			});
 		});
 
     });
@@ -106,8 +138,8 @@
 
 	$('#perfis').on("click", "button", function () {
 		var profile = $(this).data('profile');
-		console.log(profile);
 		var op = $(this).data('original-title');
+		var id = $(this).data('id');
 		if(op == "Apagar"){
 			var title = "<b>Eliminação de Perfil</b>";
 			var content = "Deseja realmente remover o perfil <b>" + profile + "</b>?<p class='text-align-left'><a href='javascript:removeProfile(\"" + profile + "\");' class='btn btn-primary btn-sm'>Sim</a> <a href='javascript:void(0);' class='btn btn-danger btn-sm'>Não</a></p>";
@@ -116,7 +148,7 @@
 			var timeout = 40000;
 			smartAlert(title, content, color, iconSmall, timeout);
 		} else if(op == "Editar"){
-			editProfile(profile);
+			editProfile(profile, id);
 		}
 		
 	});				
@@ -133,7 +165,7 @@
 
 	}
 	
-	function editProfile(profile){
+	function editProfile(profile, id){
 		$.ajax({
 			url: "<?php echo base_url();?>configuracoes/getProfile",
 			data: {
@@ -145,6 +177,7 @@
 				//tree(array.result.permissions);
 				$("#perfil-edit-form input[name='nomeEdit']").val(array.result.name);
 				$("#perfil-edit-form textarea[name='descricaoEdit']").val(array.result.description);
+				$("#perfil-edit-form input[name='id']").val(id);
 				$('#myModalEdit').modal('show');
 				$.each( array.result.permissions, function( key, value ) {
 					if( (typeof value === "object") && (value !== null) )
