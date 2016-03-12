@@ -63,9 +63,53 @@
                 responsiveHelper_datatable_tabletools.respond();
             }
         });
-        
-
         /* END TABLETOOLS */
+        
+        $( "select" ).change(function() {
+            var profile = $(this, "option:selected" ).val();
+            var user = $(this, "option:selected" ).data('id');
+            $.ajax({
+                url: "changeUserProfile",
+                data: {
+                    user: user,
+                    profile: profile
+                },
+                type: 'post',
+                success: function(result){
+                    var array =jQuery.parseJSON(result);
+                    if (array.result === true) {
+                        if (array.result === true) {
+                            var title = "<b>Permissões alteradas</b>";
+                            if (profile.length === 0){
+                                var content = "Permissões do utilizador " + user + " removidas";
+                            }else{
+                                var content = "Permissões do utilizador " + user + " alteradas para <b>" + profile + "</b>";
+                            }
+                            var color = "#739E73";
+                            var iconSmall = "fa fa-thumbs-up bounce animated";
+                            var timeout = 40000;
+                            smartAlert(title, content, color, iconSmall, timeout);
+                        }
+                        if (array.result === false) {
+                            var title = "<b>Erro de permissões</b>";
+                            var content = "Não tem permissões para executar esta operação";
+                            var iconSmall = "fa fa-exclamation bounce animated";
+                            var color = "#C46A69";
+                            var timeout = 4000;
+                            smartAlert(title, content, color, iconSmall, timeout);
+                        }
+                    } else {
+                        var title = "<b>Erro</b>";
+                        var content = "Ocorreu um erro!<br> Contacte o administrador";
+                        var iconSmall = "fa fa-exclamation bounce animated";
+                        var color = "#C46A69";
+                        var timeout = 4000;
+                        smartAlert(title, content, color, iconSmall, timeout);
+                    }
+                }
+            });
+        });
+        
         $('#users').on("click", "button", function () {
             var user = $(this).data('id');
             $.ajax({
@@ -109,8 +153,10 @@
                 }
             });
         });
+        
     });
     
+
     function smartAlert(title, content, color, icon, time) {
 
         $.smallBox({

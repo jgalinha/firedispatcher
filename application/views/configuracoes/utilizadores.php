@@ -86,14 +86,14 @@
 													echo '<td>
 													<input class="form-control tagsinput" value="' . $user['type'].' " data-role="tagsinput">
 													</td>';
-													echo "<td><form class='smart-form'><label class='select'><select class='input-sm' id='type'>";
+													echo '<td><form class="smart-form"><label class="select"><select data-id="' . $user['user'] . '" class="input-s" id="type">';
 													echo '<option></option>';
 													foreach ($profiles as $profile){
 														if($user['roles'] === $profile->name){
-															echo '<option selected="selected" value ="' . $profile->name . '">' . $profile->name . '</option>';	
+															echo '<option selected="selected" data-id="' . $user['user'] . '" value ="' . $profile->name . '">' . $profile->name . '</option>';	
 														} else {
 
-															echo '<option value ="' . $profile->name . '">' . $profile->name . '</option>';	
+															echo '<option data-id="' . $user['user'] . '" value ="' . $profile->name . '">' . $profile->name . '</option>';	
 														}
 													}
 													echo "</select></label></form></td>";

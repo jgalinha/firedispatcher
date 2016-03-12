@@ -11,6 +11,20 @@ class Configuracoes extends CI_Controller {
             redirect('home/bloquear');
         }
     }
+    
+    public function changeUserProfile()
+    {
+        $this->checkPermissions("");
+        $user = $this->input->post('user');
+        $profile = $this->input->post('profile');
+        $prifile = (strlen($profile) === 0) ? null : $profile;
+		$this->load->model('utilizadores_model', 'users');
+		$result = $this->users->changeRoles($user, $profile);
+		$array = array(
+			'result' => $result,
+		);
+		echo json_encode($array);
+    }
 		
 	public function logs(){
 		$this->load->model('log_model', 'logs');
@@ -135,6 +149,10 @@ class Configuracoes extends CI_Controller {
             "2" => "Perfis"
         );
         $this->loadPage('configuracoes/perfis', $data);
+    }
+    
+    private function checkPermissions($permission){
+        
     }
 	
 	private function editProfile(){

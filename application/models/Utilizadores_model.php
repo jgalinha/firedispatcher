@@ -2,6 +2,16 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 class Utilizadores_model extends CI_Model {
     
+    //Muda o perfil de utilizador
+    public function changeRoles($user, $roles){
+        $query = $this->cimongo->where(array('user'=> $user))->get('users');
+        if($query->num_rows() > 0){
+            $update_query =  $this->cimongo->where(array('user' => $user))->set(array('roles' => $roles))->update('users');
+            return $update_query;
+        } else {
+            return false;
+        }
+    }
     
     public function get_user_email($user){
         $query = $this->cimongo->where(array('user'=> $user))->get('users');
