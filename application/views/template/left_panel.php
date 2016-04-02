@@ -42,7 +42,7 @@
                 </ul>
             </li>
             <li>
-                <a href="#"><i class="fa fa-lg fa-fw fa-users"></i> <span class="menu-item-parent">Bombeiros</span></a>
+                <a href="<?php echo base_url('bombeiros'); ?>"><i class="fa fa-lg fa-fw fa-users"></i> <span class="menu-item-parent">Bombeiros</span></a>
             </li>
             <li>
                 <a href="#"><i class="fa fa-lg fa-fw fa-ambulance"></i> <span class="menu-item-parent">Veículos</span></a>
