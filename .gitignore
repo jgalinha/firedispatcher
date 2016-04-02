@@ -25,3 +25,14 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 *.stTheme.cache
 *.sublime-workspace
 *.sublime-project
+
+application/config/cimongo.php
+.htaccess
+application/config/cimongo.php
+.htaccess
+web.config
+README.md
+web.config
+web.config
+application/config/cimongo.php
+.htaccess
